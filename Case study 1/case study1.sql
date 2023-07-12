@@ -158,7 +158,12 @@ insert into hop_dong_chi_tiet (ma_hop_dong_chi_tiet, so_luong, ma_hop_dong, ma_d
 	('5', '11', '3', '2'),
 	('6', '1', '1', '3'),
 	('7', '2', '1', '2'),
-	('8', '2', '12', '2');
+    ('8', '2', '12', '2');
+select * from nhan_vien
+where ho_ten like "K%" or ho_ten like "H%" or ho_ten like "T%" and length(ho_ten) <= 15;
+select * from khach_hang
+where dia_chi like "%Đà Nẵng%" or dia_chi like "%Quảng Trị%" and YEAR(CURRENT_TIMESTAMP)-YEAR(ngay_sinh) between 18 and 50 ;
+
 
 
 
