@@ -62,12 +62,11 @@ left join order_detail on orders.o_id = order_detail.o_id
 left join product on order_detail.p_id = product.p_id
 where p_name is null;
 
-SET sql_mode = 0;
 select  orders.o_id, orders.o_date, sum(order_detail.od_qty*product.p_price) as total
 from orders
 join order_detail on orders.o_id = order_detail.o_id
 join product on order_detail.p_id = product.p_id
 group by orders.o_id;
-SET sql_mode = 1;
+
 
 
