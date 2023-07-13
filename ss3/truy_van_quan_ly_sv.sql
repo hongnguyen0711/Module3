@@ -1,5 +1,5 @@
-CREATE DATABASE QuanLySinhVien;
-USE QuanLySinhVien;
+CREATE DATABASE Student_management;
+USE Student_management;
 
 CREATE TABLE Class
 (
