@@ -1,5 +1,5 @@
-create database furama_management_systerm;
-use furama_management_systerm;
+create database furama_management_system;
+use furama_management_system;
 create table vi_tri(
 	ma_vi_tri int auto_increment primary key,
     ten_vi_tri varchar(45)
@@ -297,3 +297,44 @@ join bo_phan on nhan_vien.ma_bo_phan = bo_phan.ma_bo_phan
 join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
 group by hop_dong.ma_nhan_vien
 having so_luong_hop_dong > 0 and so_luong_hop_dong < 4;
+
+-- cau 16
+-- create view v_nhan_vien as select nhan_vien.ma_nhan_vien
+-- from nhan_vien
+-- left join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
+-- group by nhan_vien.ma_nhan_vien
+-- having nhan_vien.ma_nhan_vien not in
+-- (select nhan_vien.ma_nhan_vien
+-- from nhan_vien 
+-- where count(hop_dong.ma_nhan_vien) >0);
+
+-- set sql_safe_updates = 0;
+-- update nhan_vien
+-- set is_delete = 1
+-- where ma_nhan_vien in (select * from v_nhan_vien);
+
+alter table furama_management_system.nhan_vien
+add column is_delete bit(1) not null default 0 after ma_bo_phan;
+
+update nhan_vien
+set is_delete = 1
+where ma_nhan_vien not in 
+(select *from (select nhan_vien.ma_nhan_vien
+from nhan_vien
+join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
+where  year(hop_dong.ngay_lam_hop_dong) between 2019 and 2021) as temp);
+
+-- cau 18
+alter table furama_management_system.khach_hang
+add column is_delete bit(1) not null default 0 after ma_loai_khach;
+
+update khach_hang 
+set is_delete = 1
+where ma_khach_hang in
+(select *from(select khach_hang.ma_khach_hang
+from khach_hang
+join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
+where year(hop_dong.ngay_lam_hop_dong) in (2019,2020)) as temp);
+
+select * from khach_hang
+where is_delete = 1
