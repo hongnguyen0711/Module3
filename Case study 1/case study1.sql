@@ -161,10 +161,12 @@ insert into hop_dong_chi_tiet (ma_hop_dong_chi_tiet, so_luong, ma_hop_dong, ma_d
     ('8', '2', '12', '2');
  
  -- cau 2
-select * from nhan_vien
+select * 
+from nhan_vien
 where (ho_ten like "K%" or ho_ten like "H%" or ho_ten like "T%") and char_length(ho_ten) <= 15;
 -- cau 3 
-select * from khach_hang
+select * 
+from khach_hang
 where (dia_chi like "%Đà Nẵng%" or dia_chi like "%Quảng Trị%") and timestampdiff(year,ngay_sinh,CURDATE()) between 18 and 50 ;
 -- cau 4
 select khach_hang.ma_khach_hang, khach_hang.ho_ten, count(hop_dong.ma_khach_hang) as so_lan_dat_phong
@@ -325,8 +327,27 @@ join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
 where  year(hop_dong.ngay_lam_hop_dong) between 2019 and 2021) as temp);
 
 -- cau 17 
+set sql_safe_updates = 1;
+update khach_hang
+join loai_khach on khach_hang.ma_loai_khach = loai_khach.ma_loai_khach
+join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
+join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
+join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
+set khach_hang.ma_loai_khach = 1
+where khach_hang.ma_khach_hang in ( select*from (
+    select khach_hang.ma_khach_hang
+    from khach_hang
+    join loai_khach on khach_hang.ma_loai_khach = loai_khach.ma_loai_khach
+    join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
+    join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
+    join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+    join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
+    where year(hop_dong.ngay_lam_hop_dong) = 2021
+    and ten_loai_khach = "Platinium" 
+    and (dich_vu_di_kem.gia * hop_dong_chi_tiet.so_luong + dich_vu.chi_phi_thue)  > 1000000) as temp
+);
 
- 
 
 -- cau 18
 alter table furama_management_system.khach_hang
