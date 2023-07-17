@@ -324,6 +324,10 @@ from nhan_vien
 join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
 where  year(hop_dong.ngay_lam_hop_dong) between 2019 and 2021) as temp);
 
+-- cau 17 
+
+ 
+
 -- cau 18
 alter table furama_management_system.khach_hang
 add column is_delete bit(1) not null default 0 after ma_loai_khach;
@@ -337,4 +341,25 @@ join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
 where year(hop_dong.ngay_lam_hop_dong) in (2019,2020)) as temp);
 
 select * from khach_hang
-where is_delete = 1
+where is_delete = 1;
+
+--  cau 19
+
+update dich_vu_di_kem 
+set gia = gia*2
+where ma_dich_vu_di_kem in
+(select ma_dich_vu_di_kem
+from hop_dong_chi_tiet
+join hop_dong on hop_dong_chi_tiet.ma_hop_dong = hop_dong.ma_hop_dong
+where year(hop_dong.ngay_lam_hop_dong) = 2020
+group by hop_dong_chi_tiet.ma_dich_vu_di_kem
+having  sum(hop_dong_chi_tiet.so_luong) > 10
+);
+
+-- cau 20
+
+select nhan_vien.ma_nhan_vien, nhan_vien.ho_ten, nhan_vien.email, nhan_vien.so_dien_thoai, nhan_vien.ngay_sinh, nhan_vien.dia_chi
+from nhan_vien
+union
+select khach_hang.ma_khach_hang, khach_hang.ho_ten, khach_hang.email, khach_hang.so_dien_thoai, khach_hang.ngay_sinh, khach_hang.dia_chi
+from khach_hang;
