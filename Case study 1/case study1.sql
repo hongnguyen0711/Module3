@@ -164,10 +164,16 @@ insert into hop_dong_chi_tiet (ma_hop_dong_chi_tiet, so_luong, ma_hop_dong, ma_d
 select * 
 from nhan_vien
 where (ho_ten like "K%" or ho_ten like "H%" or ho_ten like "T%") and char_length(ho_ten) <= 15;
+
+select *
+from nhan_vien 
+where substring_index(ho_ten, ' ', -1) like "H%";
+
 -- cau 3 
 select * 
 from khach_hang
 where (dia_chi like "%Đà Nẵng%" or dia_chi like "%Quảng Trị%") and timestampdiff(year,ngay_sinh,CURDATE()) between 18 and 50 ;
+
 -- cau 4
 select khach_hang.ma_khach_hang, khach_hang.ho_ten, count(hop_dong.ma_khach_hang) as so_lan_dat_phong
 from khach_hang
@@ -252,20 +258,18 @@ group by hop_dong.ma_hop_dong;
  where ten_loai_khach = "Diamond" and dia_chi like "%Vinh%" or dia_chi like "%Quảng Ngãi%";
  
 -- cau 12
+select hop_dong.ma_hop_dong, nhan_vien.ho_ten, khach_hang.ho_ten, khach_hang.so_dien_thoai, dich_vu.ten_dich_vu, ifnull(sum(hop_dong_chi_tiet.so_luong), 0) as so_luong_dich_vu_di_kem, hop_dong.tien_dat_coc
+from dich_vu
+left join hop_dong on dich_vu.ma_dich_vu = hop_dong.ma_dich_vu
+left join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+left join khach_hang on hop_dong.ma_khach_hang = khach_hang.ma_khach_hang
+left join nhan_vien on hop_dong.ma_nhan_vien = nhan_vien.ma_nhan_vien
+where (month(hop_dong.ngay_lam_hop_dong) >= 10 and year(hop_dong.ngay_lam_hop_dong) = 2020) 
+and hop_dong.ma_hop_dong not in 
+(select  hop_dong.ma_hop_dong
+where month(hop_dong.ngay_lam_hop_dong) <=6 and year(hop_dong.ngay_lam_hop_dong) = 2021)
+ group by hop_dong.ma_hop_dong;
 
-select hop_dong.ma_hop_dong, nhan_vien.ho_ten, khach_hang.ho_ten, khach_hang.so_dien_thoai, dich_vu.ten_dich_vu,
-		sum(hop_dong_chi_tiet.so_luong) as so_luong_dich_vu_di_kem, hop_dong.tien_dat_coc
-from hop_dong
-join nhan_vien on hop_dong.ma_nhan_vien = nhan_vien.ma_nhan_vien
-join khach_hang on hop_dong.ma_khach_hang = khach_hang.ma_khach_hang
-join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
-join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
-join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
-where month(ngay_lam_hop_dong) > 9 and year(ngay_lam_hop_dong) = 2020 and hop_dong.ma_hop_dong not in
-(select hop_dong.ma_hop_dong
-from hop_dong
-where month(ngay_lam_hop_dong) < 7 and year(ngay_lam_hop_dong) = 2021)
-group by hop_dong.ma_hop_dong;
 
 -- cau 13
 
@@ -297,8 +301,9 @@ from nhan_vien
 join trinh_do on nhan_vien.ma_trinh_do = trinh_do.ma_trinh_do
 join bo_phan on nhan_vien.ma_bo_phan = bo_phan.ma_bo_phan
 join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
+where  year(hop_dong.ngay_lam_hop_dong) in (2020 , 2021)
 group by hop_dong.ma_nhan_vien
-having so_luong_hop_dong > 0 and so_luong_hop_dong < 4;
+having so_luong_hop_dong > 0 and so_luong_hop_dong < 4 ;
 
 -- cau 16
 -- create view v_nhan_vien as select nhan_vien.ma_nhan_vien
@@ -309,12 +314,12 @@ having so_luong_hop_dong > 0 and so_luong_hop_dong < 4;
 -- (select nhan_vien.ma_nhan_vien
 -- from nhan_vien 
 -- where count(hop_dong.ma_nhan_vien) >0);
-
 -- set sql_safe_updates = 0;
 -- update nhan_vien
 -- set is_delete = 1
 -- where ma_nhan_vien in (select * from v_nhan_vien);
 
+-- cách 1 
 alter table furama_management_system.nhan_vien
 add column is_delete bit(1) not null default 0 after ma_bo_phan;
 
@@ -326,8 +331,22 @@ from nhan_vien
 join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
 where  year(hop_dong.ngay_lam_hop_dong) between 2019 and 2021) as temp);
 
+select * 
+from nhan_vien
+where is_delete = 1;
+
+-- cách 2 
+delete from nhan_vien
+where ma_nhan_vien not in 
+(select *from (select nhan_vien.ma_nhan_vien
+from nhan_vien
+join hop_dong on nhan_vien.ma_nhan_vien = hop_dong.ma_nhan_vien
+where  year(hop_dong.ngay_lam_hop_dong) between 2019 and 2021) as temp);
+
+
+
 -- cau 17 
-set sql_safe_updates = 1;
+set sql_safe_updates = 0;
 update khach_hang
 join loai_khach on khach_hang.ma_loai_khach = loai_khach.ma_loai_khach
 join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
@@ -335,21 +354,23 @@ join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
 join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
 join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
 set khach_hang.ma_loai_khach = 1
-where khach_hang.ma_khach_hang in ( select*from (
-    select khach_hang.ma_khach_hang
-    from khach_hang
-    join loai_khach on khach_hang.ma_loai_khach = loai_khach.ma_loai_khach
-    join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
-    join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
-    join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
-    join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
-    where year(hop_dong.ngay_lam_hop_dong) = 2021
-    and ten_loai_khach = "Platinium" 
-    and (dich_vu_di_kem.gia * hop_dong_chi_tiet.so_luong + dich_vu.chi_phi_thue)  > 1000000) as temp
+where khach_hang.ma_khach_hang in ( 
+select*from (
+select khach_hang.ma_khach_hang
+from khach_hang
+join loai_khach on khach_hang.ma_loai_khach = loai_khach.ma_loai_khach
+join hop_dong on khach_hang.ma_khach_hang = hop_dong.ma_khach_hang
+join dich_vu on hop_dong.ma_dich_vu = dich_vu.ma_dich_vu
+join hop_dong_chi_tiet on hop_dong.ma_hop_dong = hop_dong_chi_tiet.ma_hop_dong
+join dich_vu_di_kem on hop_dong_chi_tiet.ma_dich_vu_di_kem = dich_vu_di_kem.ma_dich_vu_di_kem
+where year(hop_dong.ngay_lam_hop_dong) = 2021
+and ten_loai_khach = "Platinium" 
+and (dich_vu_di_kem.gia * hop_dong_chi_tiet.so_luong + dich_vu.chi_phi_thue)  > 1000000) as temp
 );
 
 
 -- cau 18
+set sql_safe_updates = 0;
 alter table furama_management_system.khach_hang
 add column is_delete bit(1) not null default 0 after ma_loai_khach;
 
@@ -364,6 +385,7 @@ where year(hop_dong.ngay_lam_hop_dong) in (2019,2020)) as temp);
 select * from khach_hang
 where is_delete = 1;
 
+set sql_safe_updates = 1;
 --  cau 19
 
 update dich_vu_di_kem 
