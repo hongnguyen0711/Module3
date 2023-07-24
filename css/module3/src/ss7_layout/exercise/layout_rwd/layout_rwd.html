@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0px;
+        }
+
+        .container {
+            display: grid;
+            height: 100vh;
+            width: 100%;
+            grid-template-columns: 200px 1fr  200px;
+            grid-template-rows: 50px 1fr  50px;
+            grid-template-areas:
+            "header header header"
+            "sidebarl content sidebarr"
+            "footer footer footer";
+            column-gap: 1px;
+            row-gap: 1px;
+        }
+
+        .header{
+            grid-area: header;
+            background-color: #222222;
+        }
+        .footer{
+            grid-area: footer;
+            background-color: #555555;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        .sidebar-l{
+            grid-area: sidebarl;
+            background-color: #f1f1f1;
+        }
+        .sidebar-r{
+            grid-area:sidebarr ;
+            background-color: #f1f1f1;
+        }
+        .content{
+            grid-area: content;
+            display: grid;
+            grid-template-columns: 1fr;
+            column-gap: 0;
+            row-gap: 0;
+        }
+
+        .actical {
+            border: gray;
+        }
+        .header ul, .header li{
+            padding:0;
+            margin:0;
+        }
+        .header li{
+            position: relative;
+            float: left;
+            list-style: none;
+            margin: 0;
+            padding:0;
+        }
+        .header li a {
+            width: 100px;
+            height: 50px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            line-height: 30px;
+            background-color: #222222;
+            color: #9d9d9d;
+            padding-top: 10px;
+        }
+        .header ul ul li a {
+            width: 200px;
+            text-align: left;
+            padding-left: 10px;
+
+        }
+        .header li a:hover{
+            background-color: black;
+            color: white;
+        }
+        .header .login {
+            float: right;
+            padding-right: 15px;
+        }
+        .sidebar-l li a{
+            width: 100px;
+            height: 50px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            line-height: 30px;
+            padding-top: 30px;
+            padding-left: 50px;
+        }
+        h1, h2{
+            padding: 15px;
+            font-family: Arial, sans-serif;
+        }
+        p{
+            padding: 5px 15px 15px 15px;
+            font-family: Montserrat, sans-serif;
+        }
+        button {
+            width: 180px;
+            height: 80px;
+            display: block;
+            text-align: center;
+            margin: 30px 10px 10px 10px;
+            border: 1px solid gray;
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header item">
+        <ul>
+            <li><a href="#">Logo</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Contact</a></li>
+            <li class="login"><a href="#">Login</a></li>
+        </ul>
+    </div>
+    <div class="sidebar-l item">
+        <ul>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+        </ul>
+    </div>
+    <div class="sidebar-r item">
+        <button>ADS</button>
+        <button>ADS</button>
+    </div>
+    <div class="content item">
+        <div class="actical">
+            <h1 style="font-size: 45px">Welcom</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, eaque eius et ex fuga ipsum! 
+                Ad ipsam molestiae nulla quisquam. Amet earum eos, explicabo hic labore magnam minima molestiae mollitia 
+                praesentium quasi reiciendis repellendus, saepe sequi unde vitae! Cumque doloribus dolorum fugit hic illum
+                laudantium minima nihil officia, porro suscipit! Blanditiis commodi ea earum illo obcaecati praesentium 
+                recusandae reiciendis ut velit, voluptatum. Asperiores autem beatae dolore doloribus hic, maxime molestias 
+                repellat? Accusamus consequuntur doloremque doloribus, ducimus, et explicabo iusto minus nemo, porro quam 
+                quibusdam repellat ullam veniam! Adipisci atque consectetur cum ea, et fugiat ipsa mollitia nulla porro, quasi repellat.
+            </p>
+        </div>
+        <div class="actical">
+            <h2 style="font-size: 30px">Test</h2>
+            <p>Lorem ipsum dolor....</p>
+        </div>
+    </div>
+    <div class="footer item">Footer text</div>
+</div>
+</body>
+</html>

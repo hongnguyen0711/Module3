@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+      box-sizing: border-box;
+    }
+
+    body {
+      padding: 5px;
+    }
+    .container{
+      display: grid;
+      height: 100vh;
+      width: 100%;
+      grid-template-columns: 30% 1fr ;
+      grid-template-rows: 10% 5% 1fr 10%;
+      grid-template-areas:
+            "header header "
+            "header-link header-link"
+            "sidebar content "
+            "footer footer ";
+    }
+    .header{
+      grid-area: header;
+      background-color: #3d5f73;
+      margin-bottom: 5px;
+      position: sticky;
+    }
+    .header-link {
+      grid-area: header-link;
+      background-color: #838d8b;
+    }
+    .header-link a:hover{
+      background-color: black;
+      color: white;
+    }
+    .footer{
+      grid-area: footer;
+      background-color: #838d8b;
+      text-align: center;
+      padding-top: 15px;
+    }
+    .sidebar {
+      grid-area: sidebar;
+      border: 5px solid gray;
+      margin: 5px;
+    }
+    .content{
+      grid-area: content;
+      margin: 5px;
+      border: 1px solid black;
+    }
+    .logo{
+      background-image: url(https://thuonghieuvaphapluat.vn/Images/hanhnm/2019/09/17/image004.png);
+      background-size: contain;
+      width: 100px;
+      height: 49px;
+      margin-left: 30px;
+      margin-top: 10px;
+      position: fixed;
+    }
+    .logo:hover{
+      background-color: #9595e7;
+    }
+    .header-link ul li {
+      display: inline-block;
+      margin-top: 5px;
+    }
+    a {
+      text-decoration: none;
+      margin: 20px;
+      color: black;
+      position: relative;
+      text-align: center;
+      left: 300px;
+    }
+    #mainpage {
+      width: 98%;
+      height: 50%;
+      frameborder : 0;
+      margin: 10px;
+    }
+    .status{
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    p{
+      margin-left: 10px;
+      line-height: 25px;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar iframe {
+      margin: 10px;
+      display: block;
+      width: 90%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo"></div>
+  </div>
+
+  <div class="header-link">
+    <ul>
+      <li><a href="#">Phim hoạt hình</a></li>
+      <li><a href="#">Phim hoạt hình yêu thích</a></li>
+      <li><a href="#">Nhân vật hoạt hình</a></li>
+      <li><a href="#">Góp ý</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar">
+    <iframe  src="https://www.youtube.com/embed/i09FIXn82B4" title="[S11] Doraemon - Tập 536 - Giày Siêu Tốc Đưa Lên Núi Và Bầu Trời - Hoạt Hình Tiếng Việt" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p class="status">[S11] Doraemon - Tập 536 - Giày Siêu Tốc Đưa Lên Núi Và Bầu Trời - Hoạt Hình Tiếng Việt</p>
+
+    <iframe src="https://www.youtube.com/embed/gnJKhjMr5cY" title="[S6] Doraemon Tập 307 - Tiếp Tục Cuộc Hành Trình Của Mình - Tiếng Việt" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p class="status">[S6] Doraemon Tập 307 - Tiếp Tục Cuộc Hành Trình Của Mình - Tiếng Việt</p>
+
+    <iframe  src="https://www.youtube.com/embed/iBAO2cfZebk" title="[S6] Doraemon Tập 308 - Nobita Thật Giỏi, Pháo Đài Vô Địch Của Suneo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p class="status">[S6] Doraemon Tập 308 - Nobita Thật Giỏi, Pháo Đài Vô Địch Của Suneo</p>
+
+    <iframe  src="https://www.youtube.com/embed/py7rym1w3AU" title="[S6] Doraemon Tập 290 - Doraemon Và Dracula (Phần Một) - Tiếng Việt" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p class="status">[S6] Doraemon Tập 290 - Doraemon Và Dracula (Phần Một)</p>
+  </div>
+
+  <div class="content">
+    <iframe id="mainpage" src=" https://www.youtube.com/embed/WutTkSWpp_s" title="[S11] Doraemon - Tập 537 - Tụi Con Muốn Ăn Nấm Tùng Nhung - Hoạt Hình Tiếng Viêt" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <p class="status">[S11] Doraemon - Tập 537 - Tụi Con Muốn Ăn Nấm Tùng Nhung - Hoạt Hình Tiếng Viêt</p>
+    <p style="margin-top : 10px">
+      Kênh POPS Kids
+      Kênh giải trí hàng đầu trên YouTube với các video nhạc nổi tiếng, các chương trình giáo dục bổ ích và nhiều nội dung thú vị khác. Nhấn subscribe để theo dõi nhiều sản phẩm mới trên POPS Kids.
+    </p>
+    <p style="margin-top : 10px">
+      Doraemon là nhân vật chính hư cấu trong loạt Manga cùng tên của họa sĩ Fujiko F. Fujio. Trong truyện lấy bối cảnh ở thế kỷ 22, Doraemon là chú mèo robot của tương lai do xưởng Matsushiba — công xưởng chuyên sản xuất robot vốn dĩ nhằm mục đích chăm sóc trẻ nhỏ.
+    </p>
+    <p style="margin-top : 10px; margin-bottom: 10px">
+      Không chỉ nổi tiếng tại quê nhà Nhật Bản mà Doraemon còn được biết đến ở nhiều quốc gia khác nhau trên thế giới. Năm 2002, Doraemon được tạp chí Time Asia bình chọn là một trong hai mươi hai người hùng đáng yêu nhất của châu Á.
+    </p>
+    <p style="margin-top : 10px; margin-bottom: 300px">
+      Theo như lời kể của họa sĩ Fujiko, trong một đêm ông đang tìm kiếm đề tài và nhân vật cho một bộ truyện tranh tâm đắc thì một con mèo hoang nhảy vào nhà, nó kêu vài tiếng rồi nhảy vào lòng ông mà ngủ. Do quá mệt mỏi Fujiko cũng thiếp đi lúc nào không biết.
+      Sáng hôm sau thức dậy, ông vội vàng bước xuống cầu thang và vấp phải con lật đật của cô con gái, từ đó sinh ra sự kết hợp giữa lật đật và mèo và ra đời nhân vật Doraemon. Ngoài nước da màu xanh không có tai, bàn tay tròn vo thì Fujiko còn đính kèm một cái chuông vàng ở cổ với dãy ruy băng màu đỏ đậm.
+    </p>
+  </div>
+  <div class="footer">
+    <p>Designed by Nguyen Hong Nguyen</p>
+  </div>
+</div>
+</body>
+</html>
