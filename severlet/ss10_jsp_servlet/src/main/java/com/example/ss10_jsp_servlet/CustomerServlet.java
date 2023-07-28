@@ -24,6 +24,7 @@ public class CustomerServlet extends HttpServlet {
         customersList.add(customer5);
         request.setAttribute("customer", customersList);
         request.getRequestDispatcher("info.jsp").forward(request,response);
+
     }
 
     @Override

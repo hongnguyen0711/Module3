@@ -19,13 +19,18 @@ public class ProductDiscountCalculator extends HttpServlet {
         double percent = Float.parseFloat(request.getParameter("percent"));
         double discountAmount = price * percent * 0.01;
         double discountPrice = price - discountAmount;
+        request.setAttribute("price", price);
+        request.setAttribute("percent", percent);
+        request.setAttribute("discountAmount", discountAmount);
+        request.setAttribute("discountPrice", discountPrice);
+        request.getRequestDispatcher("result.jsp").forward(request,response);
 
-        PrintWriter writer = response.getWriter();
-        writer.println("<html>");
-        writer.println("<h2>price:" + price + "</h2>");
-        writer.println("<h2>percent:" + percent + "</h2>");
-        writer.println("<h2>discountAmount:" + discountAmount + "</h2>");
-        writer.println("<h2>discountPrice:" + discountPrice + "</h2>");
-        writer.println("</html>");
+//        PrintWriter writer = response.getWriter();
+//        writer.println("<html>");
+//        writer.println("<h2>price:" + price + "</h2>");
+//        writer.println("<h2>percent:" + percent + "</h2>");
+//        writer.println("<h2>discountAmount:" + discountAmount + "</h2>");
+//        writer.println("<h2>discountPrice:" + discountPrice + "</h2>");
+//        writer.println("</html>");
     }
 }
