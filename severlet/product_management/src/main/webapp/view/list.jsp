@@ -36,7 +36,7 @@
         <td>${product.getDescription()}</td>
         <td>${product.getProducer()}</td>
         <td><a href="/products?action=edit&id=${product.getId()}">Edit</a></td>
-        <td><a href="/products?action=edit&id=${product.getId()}">Delete</a></td>
+        <td><a href="/products?action=delete&id=${product.getId()}">Delete</a></td>
         <td>
             <c:if test="${product.getStatus() == 0}">Available</c:if>
             <c:if test="${product.getStatus() == 1}">Not Available</c:if>

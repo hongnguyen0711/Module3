@@ -26,11 +26,11 @@ public class ProductService implements IProductService {
 
     @Override
     public void update(int id, Product product) {
-
+        repository.updateProduct(id,product);
     }
 
     @Override
     public void remove(int id, boolean available) {
-
+        repository.deleteProduct(id, available);
     }
 }

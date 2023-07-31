@@ -13,13 +13,14 @@ import java.util.Map;
 public class ProductRepository implements IProductRepository {
     public static final String INSERT = "insert into product (name, price, description, producer, status) value (?,?,?,?,?)";
     public static final String SELECT_ALL = "select * from product";
-    public static final String DELETE = "update products set status = 1 where id = ?";
-    public static final String AVAILABLE = "update products set status = 0 where id = ?";
+    public static final String DELETE = "update product set status = 1 where id = ?";
+    public static final String AVAILABLE = "update product set status = 0 where id = ?";
     public static final String UPDATE = "update product set" +
             "name = ?," +
             "price = ?," +
             "description = ?," +
             "producer = ?," +
+            "status = ?," +
             "where id = ?";
 
     @Override
@@ -49,6 +50,8 @@ public class ProductRepository implements IProductRepository {
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setString(3, product.getDescription());
             preparedStatement.setString(4, product.getProducer());
+            preparedStatement.setInt(5, product.getStatus());
+            preparedStatement.setInt(6, id);
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -58,7 +61,21 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void deleteProduct(int id, boolean available) {
-
+        Connection connection = Base.getConnection();
+        try {
+            PreparedStatement preparedStatement;
+            if (available) {
+                preparedStatement = connection.prepareStatement(DELETE);
+                preparedStatement.setInt(1, id);
+            } else {
+                preparedStatement = connection.prepareStatement(AVAILABLE);
+                preparedStatement.setInt(1, id);
+            }
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
