@@ -1,4 +1,4 @@
-package com.example.servertime;
+package ss9_servelet.practice;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

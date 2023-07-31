@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+        }
+
+        .box3 {
+            position: absolute;
+            bottom: 50px;
+            right: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .content {
+            margin-top: 100px;
+        }
+
+        .footer {
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="container">
+    <div class="box3"></div>
+</div>
+<div class="header">
+    <h1>Header</h1>
+</div>
+<div class="content">
+    <h2>Content</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in nunc eget velit bibendum tempus. Ut tincidunt lobortis nibh, vel suscipit massa porttitor et. Sed dignissim, ex non faucibus mollis, sapien arcu cursus tellus, sit amet pulvinar turpis eros vel massa. </p>
+</div>
+<div class="footer">
+    <h3>Footer</h3>
+</div>
 </body>
 </html>

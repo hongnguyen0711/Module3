@@ -13,11 +13,12 @@
 </head>
 <body>
 <h2>Result:</h2>
-<p>${firstOperand} ${operator} ${secondOperand}
-    <c:if test="${str == null} "> = </c:if>
-    ${result} </p>
+<%--<p>${firstOperand} ${operator} ${secondOperand}--%>
+<%--    <c:if test="${str == null} "> = </c:if>--%>
+<%--    ${result} </p>--%>
+<%--<p>${str}</p>--%>
 
-<p>${error}</p>
+
 
 </body>
 </html>
