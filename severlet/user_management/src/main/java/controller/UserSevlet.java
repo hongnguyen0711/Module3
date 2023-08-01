@@ -40,6 +40,9 @@ public class UserSevlet extends HttpServlet {
                 case "search":
                     searchUser(request, response);
                     break;
+                case "sort":
+                    sortUser(request,response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -48,6 +51,7 @@ public class UserSevlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
+
 
 
     @Override
@@ -155,4 +159,15 @@ public class UserSevlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+    private void sortUser(HttpServletRequest request, HttpServletResponse response) {
+
+        List<User> users = service.sortByName();
+        request.setAttribute("users",users);
+        try {
+            request.getRequestDispatcher("user/sort.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

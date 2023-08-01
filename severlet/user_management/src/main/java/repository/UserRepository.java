@@ -2,11 +2,10 @@ package repository;
 
 import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserRepository implements IUserRepository {
@@ -18,6 +17,7 @@ public class UserRepository implements IUserRepository {
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
     private static final String SEARCH_USERS = "select * from users where country = ?;";
+    private static final String SORT_BY_NAME = "select * from users order by name;";
 
     @Override
     public void insertUser(User user) {
@@ -112,5 +112,26 @@ public class UserRepository implements IUserRepository {
             throw new RuntimeException(e);
         }
         return user;
+    }
+
+    @Override
+    public List<User> sortByName() {
+        Connection connection = Base.getConnection();
+        List<User> list = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_NAME);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String country = resultSet.getString("country");
+
+                list.add(new User(id,name,email,country));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 }

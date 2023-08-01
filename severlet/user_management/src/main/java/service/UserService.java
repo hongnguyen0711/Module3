@@ -4,6 +4,7 @@ import model.User;
 import repository.IUserRepository;
 import repository.UserRepository;
 
+import java.util.List;
 import java.util.Map;
 
 public class UserService implements IUserService {
@@ -37,5 +38,10 @@ public class UserService implements IUserService {
     @Override
     public User search(String country) {
        return repository.search(country);
+    }
+
+    @Override
+    public List<User> sortByName() {
+        return repository.sortByName();
     }
 }

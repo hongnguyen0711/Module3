@@ -2,17 +2,22 @@ package service;
 
 import model.User;
 
+import java.awt.*;
+import java.util.List;
 import java.util.Map;
 
 public interface IUserService {
-    public void insertUser(User user);
+     void insertUser(User user);
 
-    public User selectUser(int id);
+     User selectUser(int id);
 
-    public Map<Integer,User> selectAllUsers();
+     Map<Integer,User> selectAllUsers();
 
-    public void deleteUser(int id);
+     void deleteUser(int id);
 
-    public void updateUser(int id,User user);
-    public User search(String country);
+     void updateUser(int id,User user);
+     User search(String country);
+
+     List<User> sortByName();
+
 }
