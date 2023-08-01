@@ -17,6 +17,9 @@
 <p>
     <a href="/products?action=create"> Create new product</a>
 </p>
+<p>
+    <a href="/products?action=search">Search Product</a>
+</p>
 <table border="1px">
 <tr>
     <td>Id</td>

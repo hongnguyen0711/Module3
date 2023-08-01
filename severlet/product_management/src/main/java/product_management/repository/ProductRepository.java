@@ -12,16 +12,17 @@ import java.util.Map;
 
 public class ProductRepository implements IProductRepository {
     public static final String INSERT = "insert into product (name, price, description, producer, status) value (?,?,?,?,?)";
-    public static final String SELECT_ALL = "select * from product";
+    public static final String SELECT_ALL = "select * from product where status = ?";
     public static final String DELETE = "update product set status = 1 where id = ?";
     public static final String AVAILABLE = "update product set status = 0 where id = ?";
-    public static final String UPDATE = "update product set" +
-            "name = ?," +
-            "price = ?," +
-            "description = ?," +
-            "producer = ?," +
-            "status = ?," +
-            "where id = ?";
+    public static final String UPDATE = "update product set " +
+                                        "name = ?," +
+                                        "price = ?," +
+                                        "description = ?," +
+                                        "producer = ?," +
+                                        "status = ? " +
+                                        " where id = ?";
+    public static final String SEARCH = "select * from product where name = ?";
 
     @Override
     public void insertProduct(Product product) {
@@ -52,6 +53,8 @@ public class ProductRepository implements IProductRepository {
             preparedStatement.setString(4, product.getProducer());
             preparedStatement.setInt(5, product.getStatus());
             preparedStatement.setInt(6, id);
+
+            preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -84,6 +87,7 @@ public class ProductRepository implements IProductRepository {
         Connection connection = Base.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            preparedStatement.setInt(1,0);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -106,5 +110,30 @@ public class ProductRepository implements IProductRepository {
     @Override
     public Product findById(int id) {
         return findAll().get(id);
+    }
+    @Override
+    public Product searchProduct(String name) {
+        Connection connection = Base.getConnection();
+        Product product = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SEARCH);
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nameSearch = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                String description = resultSet.getString("description");
+                String producer = resultSet.getString("producer");
+                int status = resultSet.getInt("status");
+
+                product = new Product(id, nameSearch, price, description, producer, status);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
     }
 }

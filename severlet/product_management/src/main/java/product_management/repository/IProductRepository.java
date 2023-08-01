@@ -10,4 +10,5 @@ public interface IProductRepository {
     void deleteProduct(int id,boolean available);
     Map<Integer, Product> findAll();
     Product findById(int id);
+    public Product searchProduct(String name);
 }

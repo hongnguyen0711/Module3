@@ -35,6 +35,9 @@ public class ProductServlet extends HttpServlet {
             case "view":
                 viewCustomer(request, response);
                 break;
+            case "search":
+                showSearchForm(request, response);
+                break;
             default:
                 listProduct(request, response);
         }
@@ -57,10 +60,13 @@ public class ProductServlet extends HttpServlet {
             case "delete":
                 deleteCustomer(request, response);
                 break;
+            case "search":
+                searchProduct(request, response);
             default:
 
         }
     }
+
 
 
     private void listProduct(HttpServletRequest request, HttpServletResponse response) {
@@ -181,12 +187,36 @@ public class ProductServlet extends HttpServlet {
                 request.getRequestDispatcher("view/error-404").forward(request, response);
             } else {
                 request.setAttribute("product", product);
-                request.getRequestDispatcher("view/view.jsp").forward(request,response);
+                request.getRequestDispatcher("view/view.jsp").forward(request, response);
             }
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void showSearchForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/view/search.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("search");
+        Product product = service.searchProduct(name);
+
+        try {
+            if (product == null) {
+                request.getRequestDispatcher("/view/error-404.jsp").forward(request, response);
+            } else {
+                request.setAttribute("product", product);
+                request.getRequestDispatcher("/view/search.jsp").forward(request, response);
+            }
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
