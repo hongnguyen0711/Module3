@@ -1,3 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 2/8/2023
+  Time: 5:11 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
@@ -17,14 +25,13 @@
                         <div class="col-md-6 col-lg-7 d-flex align-items-center" style="background-color: #d3c1b9">
                             <div class="card-body p-4 p-lg-5 text-black">
 
-                                <form >
-
-                                    <div class="d-flex align-items-center mb-3 pb-1" style="margin-left:20%">
+                                <form method="post">
+                                    <div class="d-flex align-items-center mb-3 pb-1">
                                         <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                        <span class="h1 fw-bold mb-0" >Simple Booking</span>
+                                        <span class="h1 fw-bold mb-0">Simple</span>
                                     </div>
 
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign up now</h5>
 
                                     <div class="form-outline mb-4">
                                         <input type="email" id="form2Example17" class="form-control form-control-lg" />

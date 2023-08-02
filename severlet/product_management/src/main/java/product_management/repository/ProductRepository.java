@@ -25,6 +25,32 @@ public class ProductRepository implements IProductRepository {
     public static final String SEARCH = "select * from product where name = ?";
 
     @Override
+    public Map<Integer, Product> findAll() {
+        Map<Integer, Product> product = new HashMap<>();
+        Connection connection = Base.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            preparedStatement.setInt(1,0);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                String description = resultSet.getString("description");
+                String producer = resultSet.getString("producer");
+                int status = resultSet.getInt("status");
+
+                product.put(id, new Product(id, name, price, description, producer, status));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
+    }
+
+
+    @Override
     public void insertProduct(Product product) {
         Connection connection = Base.getConnection();
         try {
@@ -81,30 +107,6 @@ public class ProductRepository implements IProductRepository {
         }
     }
 
-    @Override
-    public Map<Integer, Product> findAll() {
-        Map<Integer, Product> product = new HashMap<>();
-        Connection connection = Base.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
-            preparedStatement.setInt(1,0);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                String description = resultSet.getString("description");
-                String producer = resultSet.getString("producer");
-                int status = resultSet.getInt("status");
-
-                product.put(id, new Product(id, name, price, description, producer, status));
-            }
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return product;
-    }
 
 
     @Override

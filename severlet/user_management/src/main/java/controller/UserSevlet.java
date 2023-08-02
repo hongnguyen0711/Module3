@@ -162,9 +162,9 @@ public class UserSevlet extends HttpServlet {
     private void sortUser(HttpServletRequest request, HttpServletResponse response) {
 
         List<User> users = service.sortByName();
-        request.setAttribute("users",users);
+        request.setAttribute("listUser",users);
         try {
-            request.getRequestDispatcher("user/sort.jsp").forward(request,response);
+            request.getRequestDispatcher("user/list.jsp").forward(request,response);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }

@@ -4,6 +4,7 @@
 <html>
 <head>
   <title>User Management Application</title>
+  <link rel="stylesheet" href="/bootstrap-5.2.3-dist/css/bootstrap.css">
 </head>
 <body>
 <center>
@@ -15,7 +16,7 @@
   </h2>
 </center>
 <div align="center">
-  <table border="1" cellpadding="5">
+  <table class="table table-responsive table-hover table-bordered">
     <caption><h2>List of Users</h2></caption>
     <tr>
       <th>ID</th>
@@ -38,5 +39,6 @@
     </c:forEach>
   </table>
 </div>
+<script src="/bootstrap-5.2.3-dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>
