@@ -138,6 +138,7 @@ public class ProductServlet extends HttpServlet {
                 product.setDescription(description);
                 product.setProducer(producer);
                 product.setStatus(status);
+
                 service.update(id, product);
                 request.setAttribute("product", product);
                 request.setAttribute("message", "Product information was updated");

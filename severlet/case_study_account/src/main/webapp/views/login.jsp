@@ -26,31 +26,32 @@
                             <div class="card-body p-4 p-lg-5 text-black">
 
                                 <form method="post">
-                                    <div class="d-flex align-items-center mb-3 pb-1">
+                                    <div class="d-flex align-items-center mb-3 pb-1" style="margin-left:20%">
                                         <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                        <span class="h1 fw-bold mb-0" style="text-align: center">Simple</span>
+                                        <span class="h1 fw-bold mb-0" >Simple Booking</span>
                                     </div>
 
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 
                                     <div class="form-outline mb-4">
-                                        <input type="email" id="form2Example17" class="form-control form-control-lg" />
-                                        <label class="form-label" for="form2Example17">Email address</label>
+                                        <input type="text" id="form2Example17" class="form-control form-control-lg" name="user" placeholder="enter here..." required/>
+                                        <label class="form-label" for="form2Example17" >User name</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example27" class="form-control form-control-lg" />
+                                        <input type="password" id="form2Example27" class="form-control form-control-lg" name="password" placeholder="enter here..." required/>
                                         <label class="form-label" for="form2Example27">Password</label>
                                     </div>
 
+                                       <p class="text-bg-danger" style="text-align: center">${message}</p>
+
                                     <div class="pt-1 mb-4">
-                                        <button class="btn btn-dark btn-lg btn-block" type="button">Login</button>
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
                                     </div>
 
-                                    <a class="small text-muted" href="#!">Forgot password?</a>
-                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
-                                                                                                              style="color: #393f81;">Register here</a></p>
-                                    <a href="#!" class="small text-muted">Terms of use.</a>
+                                    <a class="small text-muted" href="/account?action=reset">Forgot password?</a>
+                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/account?action=signup" style="color: #393f81;">Register here</a></p>
+                                    <a href="/account?action=home" class="small text-muted">Back to home page.</a>
                                     <a href="#!" class="small text-muted">Privacy policy</a>
                                 </form>
 

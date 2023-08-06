@@ -13,7 +13,7 @@ public class Base {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(JDBS_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

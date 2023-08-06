@@ -5,15 +5,24 @@ public class Account {
     private String username;
     private String password;
     private int status;
+    private int role;
 
     public Account() {
     }
 
-    public Account(int id, String username, String password, int status) {
+    public Account(int id, String username, String password, int status, int role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.status = status;
+        this.role = role;
+    }
+
+    public Account(String username, String password, int status, int role) {
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.role = role;
     }
 
     public int getId() {
@@ -46,6 +55,14 @@ public class Account {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     @Override

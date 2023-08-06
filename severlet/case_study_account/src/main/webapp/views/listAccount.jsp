@@ -1,3 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 4/8/2023
+  Time: 1:19 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,6 +55,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../bootstrap-5.2.3-dist/css/bootstrap.css">
 
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
 </head>
 
 
@@ -57,17 +68,14 @@
     <div class="flex flex-wrap items-center">
         <div class="flex flex-shrink md:w-1/3 justify-center md:justify-start text-white">
             <a href="#">
-                <h3 style="font-size: 150%; font-weight: bold;color: white; text-decoration: none">Simple Booking </h3>
+                <h3 style="font-size: 130%; font-weight: bold;color: white; text-decoration: none">Simple Booking </h3>
             </a>
         </div>
 
         <div class="flex flex-1 md:w-1/3 justify-center md:justify-start text-white px-2">
                 <span class="relative w-full">
-                    <input type="search" placeholder="Search" class="w-full bg-gray-900 text-white transition border border-transparent focus:outline-none focus:border-gray-400 rounded py-3 px-2 pl-10 appearance-none leading-normal">
+                    <input type="search" placeholder="Search" class="w-full bg-gray-900 text-white transition focus:outline-none  rounded py-3 px-2 pl-10 appearance-none leading-normal">
                     <div class="absolute search-icon" style="top: 1rem; left: .8rem;">
-                        <svg class="fill-current pointer-events-none text-white w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                        </svg>
                     </div>
                 </span>
         </div>
@@ -146,9 +154,10 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap">
-            <table class="table table-striped-columns" style="margin: 3%; text-align: center" >
+        <div class="container-fluid">
+            <table id="table" class="table table-striped-columns" style="margin: 3%; text-align: center">
                 <h2 style="text-align: center; margin-top: 2%">List of Account</h2>
+                <a href="/account?action=create" class="btn btn-secondary btn-md" ><button >Add Account</button></a>
                 <thead>
                 <tr>
                     <th>#</th>
@@ -166,10 +175,28 @@
                         <td>${account.getId()}</td>
                         <td>${account.getUsername()}</td>
                         <td>${account.getPassword()}</td>
-                        <td>${account.getStatus()}</td>
-                        <td>${account.getRole()}</td>
+                        <td>
+                            <c:if test="${account.getStatus()==0}" >
+                                Available
+                            </c:if>
+                            <c:if test="${account.getStatus()==1}" >
+                                Not Available
+                            </c:if>
+                                </td>
+                        <td>
+                            <c:if test="${account.getRole()==1}" >
+                                Admin
+                            </c:if>
+                            <c:if test="${account.getRole()!=1}" >
+                                User
+                            </c:if>
+                        </td>
                         <td><a href="/account?action=edit&id=${account.getId()}"><button type="button" class="btn btn-secondary btn-md">Edit</button></a></td>
-                        <td><a href="/account?action=delete&id=${account.getId()}"><button type="button" class="btn btn-secondary btn-md">Delete</button></a></td>
+                        <td> <button type="button" class="btn btn-danger" onclick="showModal(${account.getId()})"
+                                <c:if test="${account.getStatus()==1}">disabled</c:if>
+                        >
+                            Delete
+                        </button></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -179,7 +206,30 @@
     </div>
 </div>
 
+<!-- Modal -->
+<form action="/account?action=delete" method="post">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">DELETE ACCOUNT</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <input type="hidden" name="id" id="id">
+                <div class="modal-body">
+                    Bạn có muốn xóa account có code là <span id="codeAccountDelete">?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <script>
+
+
     /*Toggle dropdown list*/
     function toggleDD(myDropMenu) {
         document.getElementById(myDropMenu).classList.toggle("invisible");
@@ -211,8 +261,25 @@
             }
         }
     }
+
 </script>
 
+
+<script src="/bootstrap-5.2.3-dist/js/bootstrap.bundle.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+
+
+<script>
+    new DataTable('#table');
+    function showModal(id) {
+        document.getElementById("codeAccountDelete").innerText = id;
+        document.getElementById("id").value = id;
+        $("#deleteModal").modal("show");
+    }
+</script>
 
 </body>
 
